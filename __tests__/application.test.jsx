@@ -14,8 +14,6 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 beforeEach(() => {
   render(<TodoApp />);
-
-  // screen.debug();
 });
 
 const addList = async (listName) => {
@@ -73,24 +71,41 @@ describe('tasks', () => {
     expect(await screen.findByText('Required!')).toBeInTheDocument();
   });
 
-  it('can be created, finished and removed', async () => {
+  it('can be created', async () => {
     const taskNames = ['first', 'second, third'];
     await addList('primary list');
 
-    // Add tasks
+    for (const task of taskNames) {
+      await addTask(task);
+    }
+  });
+
+  it('can be finished', async () => {
+    const taskNames = ['first', 'second, third'];
+    await addList('primary list');
+
     for (const task of taskNames) {
       await addTask(task);
     }
 
-    // Change task state
     const taskToClick = taskNames[1];
     const checkBox = screen.getByRole('checkbox', { name: taskToClick });
     userEvent.click(checkBox);
     await waitFor(() => {
       expect(checkBox).toBeChecked();
     });
+  });
 
-    // Remove task
+  it('can be removed', async () => {
+    const taskNames = ['first', 'second, third'];
+    await addList('primary list');
+
+    for (const task of taskNames) {
+      await addTask(task);
+    }
+
+    const taskToClick = taskNames[1];
+
     const taskItemToRemove = within(screen.getByTestId('tasks')).getByText(taskToClick).closest('li');
     userEvent.click(within(taskItemToRemove).getByRole('button'));
     await waitFor(() => {

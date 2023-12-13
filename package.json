@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/lmorningstar116/frontend-testing-react-project-70/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/lmorningstar116/frontend-testing-react-project-70/actions)",
+  "description": "Тестирование TODO-приложения",
   "main": "index.js",
   "scripts": {
     "test": "npx jest --bail",
